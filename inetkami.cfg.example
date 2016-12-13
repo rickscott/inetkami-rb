@@ -1,0 +1,9 @@
+# insert your own consumer/access_token parameters here.
+# they should look something like this.
+consumer_key        = qKNo5Kz848UPle8gVqzqmi
+consumer_secret     = i16IJfY1PKimxSLm1BUhTHmqS357C5G2UzImb8K6x
+access_token        = gR5cd2xz1LJrb1lkzUZEPvzrAneZpPJZRJ0Ec5UvOv3oRyfvdg
+access_token_secret = ICGKaExrfpKu9j0VpvkVzLoJGyB750niCsZ5V6IUSB
+
+# how long to wait between fetches, in seconds
+fetch_delay = 90
