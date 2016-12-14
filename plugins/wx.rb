@@ -23,18 +23,12 @@ class WeatherPlugin
 
         station.upcase!
 
-        puts "Station is >>#{station}<<"
-        puts "Command is >>#{command}<<"
-
         case command
             when /metar/i
-                puts "returning metar for #{station}"
                 return metar(station)
             when /taf/i
-                puts "returning taf for #{station}"
                 return taf(station)
             else
-                puts "default: both taf and metar #{station}"
                 return [metar(station), taf(station)]
         end
     end

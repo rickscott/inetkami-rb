@@ -1,6 +1,11 @@
 require 'twitter'
 require 'parseconfig'
 require 'yaml/store'
+require 'logger'
+
+log = Logger.new(STDOUT)
+log.info('Inetkami.rb starting up')
+
 
 # wire up configfile and state database
 configfile = ParseConfig.new('inetkami.cfg')
@@ -68,16 +73,21 @@ end
 # forever:
 while true
 
+    log.info('Checking mentions...')
     mentions = twitter.mentions_timeline(
         since_id: last_mention, count: 1
     )
+
+    if mentions.size == 0
+        log.info("No new mentions.")
+    end
 
     # nb: mentions arrive newest-first, with ordering not guaranteed
     # but we want to process them in order of ascending id
     mentions.sort_by! { |m| m.id }
 
     mentions.each do |m|
-        puts "#{m.id} => #{m.full_text}"
+        log.info("New mention #{m.id} => #{m.full_text}")
 
         # write down that we've handled this mention --
         # do this _before_ replying to avoid "getting stuck"
@@ -97,6 +107,7 @@ while true
         replies.flatten!
 
         replies.each do |r|
+            log.info("  > mention #{m.id}: replying #{r}")
             msgs = section_to_140(m.user.name, r)
 
             msgs.each do |u|
